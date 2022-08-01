@@ -1,0 +1,7 @@
+{
+  "name": "{{ .FolderName }}",
+  "private": true,
+  "devDependencies": {
+    "esbuild": "0.14.49"
+  }
+}

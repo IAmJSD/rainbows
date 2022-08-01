@@ -1,0 +1,39 @@
+# The script that is ran on initialization. For most use cases, you will just want to clean install your package manager here.
+# If you use yarn, you can simply change that here.
+initialize: npm ci
+
+# Defines what should be watched and bundled.
+targets:
+  # Defines the path relative to root where the bundle entrypoints are kept.
+  bundle_entrypoints_folder:
+    javascript: app/frontend/javascripts/bundles
+    styling: app/frontend/styles/bundles
+
+  # Defines what folders should be watched for changes.
+  watch:
+    javascript:
+      - app/frontend/javascripts
+    styling:
+      - app/frontend/styles
+
+# Defines how the bundling will actually operate.
+strategy:
+  # The type is either ParallelExecution (spawns all processes at the same time), SingleExecution (does not care about how
+  # many, just runs one command), or SingleBatchedExecution (runs a process one after another to handle compilation).
+  type: ParallelCompilation
+
+  # If this is set to SingleExecution, uncomment below and set it up as you would expect for your use case.
+  #commandline_args_each:
+  #  - text: --some-random-flag-for-filename
+  #  - variable: filename
+  #  - text: --some-random-flag-for-bundle-path
+  #  - variable: bundle_path
+
+  # The commands that are to be ran in each environment type. The usable variables are the following:
+  # .CmdBlock - If the mode is SingleBatchedExecution, this will contain the generated arguments.
+  # .Filename - If the mode is ParallelExecution or SingleExecution, this contains the filename that should be used.
+  # .OutputFolder - Defines the output folder for content.
+  cmds:
+    test: node_modules/.bin/esbuild
+    development: node_modules/.bin/esbuild
+    production: node_modules/.bin/esbuild
